@@ -185,7 +185,7 @@
       return acc;
     }
     _.each(collection, function(val) {
-      accumulator=iterator(accumulator, val);
+      accumulator = iterator(accumulator, val);
     });
     return accumulator;
 
@@ -207,7 +207,16 @@
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
+    if (iterator === undefined) {
+      iterator = _.identity;
+    }
     // TIP: Try re-using reduce() here.
+    return _.reduce(collection, function(acc, val) {
+      if (!iterator(val)) {
+        acc = false;
+      }
+      return acc;
+    }, true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
