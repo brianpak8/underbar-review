@@ -96,7 +96,7 @@
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
-    // copying code in and modifying it
+    // copying code in and modifyisng it
     var pass = [];
     _.each(collection, function(val) {
       if ( !test( val ) ) {
@@ -109,6 +109,19 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    var uniq = [];
+    var numObj = {};
+    for (var i = 0; i < array.length; i++) {
+      if (numObj[array[i]]) {
+        numObj[array[i]] += 1;
+      } else {
+        numObj[array[i]] = 1;
+      }
+    }
+    for (var key in numObj) {
+      uniq.push(+key);
+    }
+    return uniq;
   };
 
 
@@ -117,6 +130,11 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+    var mapped = [];
+    for (var i = 0; i < collection.length; i++) {
+      mapped.push(iterator(collection[i]));
+    }
+    return mapped;
   };
 
   /*
