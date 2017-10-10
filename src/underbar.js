@@ -115,7 +115,7 @@
     if (isSorted) {
       uniq.push(array[0]);
       for (var j = 1; j < array.length; j++) {
-        if (iterator(array[j]) !== iterator(array[j-1])) {
+        if (iterator(array[j]) !== iterator(array[j - 1])) {
           uniq.push(array[j]);
         }
       }
@@ -239,12 +239,16 @@
       iterator = _.identity;
     }
     // TIP: Try re-using reduce() here.
-    return _.reduce(collection, function(acc, val) {
-      if (iterator(val)) {
-        acc = true;
-      }
-      return acc;
-    }, false);
+
+    return !(_.every(collection, function(val) {
+      return !iterator(val);
+    }));
+    // return _.reduce(collection, function(acc, val) {
+    //   if (iterator(val)) {
+    //     acc = true;
+    //   }
+    //   return acc;
+    // }, false);
   };
 
 
