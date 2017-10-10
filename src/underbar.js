@@ -111,6 +111,18 @@
   _.uniq = function(array, isSorted, iterator) {
     var uniq = [];
     var numObj = {};
+
+    if (isSorted) {
+      uniq.push(array[0]);
+      for (var j = 1; j < array.length; j++) {
+        if (iterator(array[j]) !== iterator(array[j-1])) {
+          uniq.push(array[j]);
+        }
+      }
+      return uniq;
+    }
+
+
     for (var i = 0; i < array.length; i++) {
       if (numObj[array[i]]) {
         numObj[array[i]] += 1;
