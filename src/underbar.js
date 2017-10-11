@@ -336,18 +336,17 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
-    var alreadyCalled = false;
-    var result;
-    var calledArgs = {};
-
-    return function(val) {
-      if (!alreadyCalled || calledArgs[val] === undefined || calledArgs[val] !== result) {
-        result = func.apply(this, arguments);
-        alreadyCalled = true;
-        calledArgs[val] = result;
+    var memoized = {};
+    return function () {
+      var key = JSON.stringify(arguments);
+      if (memoized[key]) {
+        return memoized[key];
+      } else {
+        var val = func.apply(this, arguments);
+        memoized[key] = val;
+        return val;
       }
-      return result;
-    };
+    }
   };
 
   // Delays a function for the given number of milliseconds, and then calls
